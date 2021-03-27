@@ -1,0 +1,53 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Linq;
+
+namespace StreamableSequence.Test
+{
+    [TestClass]
+    public class StatefulStreamableSequenceTest
+    {
+        [TestMethod]
+        [DataRow(0, 0, false)]
+        [DataRow(null, 0, true)]
+        [DataRow(0, null, true)]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ContructorShouldThrowForNullArgs(
+            int? firstElement,
+            int? initialState,
+            bool getNextElement)
+        {
+            if (getNextElement)
+            {
+                _ = new StatefulStreamableSequence<int?, int?>(
+                    firstElement, initialState, (i, j, k) => (0, 0, false));
+            }
+            else
+            {
+                _ = new StatefulStreamableSequence<int?, int?>(
+                    firstElement, initialState, null);
+            }
+        }
+
+        [TestMethod]
+        public void ShouldReturnCorrectSequence()
+        {
+            var x = new StatefulStreamableSequence<int, int>(
+                    1, 0, (i, j, k) => (i + 1, 0, false));
+
+            Assert.AreEqual(1, x.First());
+            Assert.AreEqual(2, x.Skip(1).First());
+            Assert.AreEqual(3, x.Skip(2).First());
+        }
+
+        [TestMethod]
+        public void ShouldUpdateState()
+        {
+            var x = new StatefulStreamableSequence<int, int>(
+                    1, 0, (i, j, k) => (i + j, 1, false));
+
+            Assert.AreEqual(1, x.Skip(1).First());
+            Assert.AreEqual(2, x.Skip(2).First());
+        }
+    }
+}

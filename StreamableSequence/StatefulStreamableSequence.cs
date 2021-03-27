@@ -53,11 +53,11 @@ namespace StreamableSequence
 
             while (!isCompleted)
             {
+                yield return currentElement;
+
                 indexOfCurrentElement++;
                 (currentElement, currentState, isCompleted) =
                     getNextElement(currentElement, currentState, indexOfCurrentElement);
-
-                yield return currentElement;
             }
         }
 
