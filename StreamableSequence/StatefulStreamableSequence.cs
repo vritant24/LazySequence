@@ -6,11 +6,11 @@ namespace StreamableSequence
 {
     public class StatefulStreamableSequence<T, U> : IEnumerable<T>
     {
-        private readonly StatefulGetNextElement getNextElement;
+        private readonly StatefulGetNextElementDelegate getNextElement;
         private readonly T firstElement;
         private readonly U initialState;
 
-        public delegate (T nextElement, U currentState, bool isLastElement) StatefulGetNextElement(
+        public delegate (T nextElement, U currentState, bool isLastElement) StatefulGetNextElementDelegate(
             T previousElement, U state, ulong nextIndex);
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace StreamableSequence
         public StatefulStreamableSequence(
             T firstElement,
             U initialState,
-            StatefulGetNextElement getNextElement)
+            StatefulGetNextElementDelegate getNextElement)
         {
             this.getNextElement = getNextElement 
                 ?? throw new ArgumentNullException(nameof(getNextElement));

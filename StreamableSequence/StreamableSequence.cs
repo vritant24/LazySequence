@@ -6,10 +6,10 @@ namespace StreamableSequence
 {
     public class StreamableSequence<T> : IEnumerable<T>
     {
-        private readonly GetNextElement getNextElement;
+        private readonly GetNextElementDelegate getNextElement;
         private readonly T firstElement;
 
-        public delegate (T nextElement, bool isLastElement) GetNextElement(
+        public delegate (T nextElement, bool isLastElement) GetNextElementDelegate(
             T previousElement, ulong nextIndex);
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace StreamableSequence
         /// </param>
         public StreamableSequence(
             T firstElement,
-            GetNextElement getNextElement)
+            GetNextElementDelegate getNextElement)
         {
             this.getNextElement = getNextElement
                 ?? throw new ArgumentNullException(nameof(getNextElement));
