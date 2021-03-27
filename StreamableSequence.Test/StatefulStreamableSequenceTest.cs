@@ -33,7 +33,7 @@ namespace StreamableSequence.Test
         public void ShouldReturnCorrectSequence()
         {
             var x = new StatefulStreamableSequence<int, int>(
-                    1, 0, (i, j, k) => (i + 1, 0, false));
+                    1, 0, (i, _, _) => (i + 1, 0, false));
 
             Assert.AreEqual(1, x.First());
             Assert.AreEqual(2, x.Skip(1).First());
@@ -44,10 +44,29 @@ namespace StreamableSequence.Test
         public void ShouldUpdateState()
         {
             var x = new StatefulStreamableSequence<int, int>(
-                    1, 0, (i, j, k) => (i + j, 1, false));
+                    1, 0, (i, j, _) => (i + j, 1, false));
 
             Assert.AreEqual(1, x.Skip(1).First());
             Assert.AreEqual(2, x.Skip(2).First());
+        }
+
+        [TestMethod]
+        public void ShouldUpdateIndex()
+        {
+            var x = new StatefulStreamableSequence<int, int>(
+                    0, 0, (_, _, k) => ((int)k, 0, false));
+
+            Assert.AreEqual(1, x.Skip(1).First());
+            Assert.AreEqual(2, x.Skip(2).First());
+        }
+
+        [TestMethod]
+        public void ShouldComplete()
+        {
+            var x = new StatefulStreamableSequence<int, int>(
+                    1, 1, (i, j, _) => (i + j, 1, i == 10));
+
+            Assert.AreEqual(10, x.Count());
         }
     }
 }
