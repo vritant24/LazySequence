@@ -17,12 +17,12 @@ namespace StreamableSequence.Test
         {
             if (getNextElement)
             {
-                _ = new StreamableSequence<int?>(
+                _ = StreamableSequence<int?>.Create(
                     firstElement, (i, k) => (0, false));
             }
             else
             {
-                _ = new StreamableSequence<int?>(
+                _ = StreamableSequence<int?>.Create(
                     firstElement, null);
             }
         }
@@ -30,7 +30,7 @@ namespace StreamableSequence.Test
         [TestMethod]
         public void ShouldReturnCorrectSequence()
         {
-            var x = new StreamableSequence<int>(
+            var x = StreamableSequence<int>.Create(
                     1, (i, k) => (i + 1, false));
 
             Assert.AreEqual(1, x.First());
@@ -41,7 +41,7 @@ namespace StreamableSequence.Test
         [TestMethod]
         public void ShouldUpdateIndex()
         {
-            var x = new StreamableSequence<int>(
+            var x = StreamableSequence<int>.Create(
                     0, (_, k) => ((int)k,false));
 
             Assert.AreEqual(1, x.Skip(1).First());
@@ -51,7 +51,7 @@ namespace StreamableSequence.Test
         [TestMethod]
         public void ShouldComplete()
         {
-            var x = new StreamableSequence<int>(
+            var x = StreamableSequence<int>.Create(
                     1, (i, _) => (i + 1, i == 10));
 
             Assert.AreEqual(10, x.Count());

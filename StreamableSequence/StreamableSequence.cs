@@ -16,6 +16,9 @@ namespace StreamableSequence
         /// A class that allows you to lazily generate elements of a sequence
         /// and be iterated on
         /// </summary>
+        /// <param name="firstElement">
+        /// The first element of the sequence
+        /// </param>
         /// <param name="getNextElement">
         /// A function that is given:
         /// 1. The previous element of the sequence
@@ -24,10 +27,19 @@ namespace StreamableSequence
         /// 1. The next element in the sequence
         /// 2. A bool to indicate the element is the last element
         /// </param>
-        /// <param name="firstElement">
-        /// The first element of the sequence
-        /// </param>
-        public StreamableSequence(
+        public static StreamableSequence<T> Create(
+            T firstElement,
+            GetNextElementDelegate getNextElement)
+        {
+            getNextElement = getNextElement
+                ?? throw new ArgumentNullException(nameof(getNextElement));
+            firstElement = firstElement
+                ?? throw new ArgumentNullException(nameof(firstElement));
+
+            return new StreamableSequence<T>(firstElement, getNextElement);
+        }
+
+        private StreamableSequence(
             T firstElement,
             GetNextElementDelegate getNextElement)
         {

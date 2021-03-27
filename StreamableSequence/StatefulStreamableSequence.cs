@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace StreamableSequence
 {
-    public class StatefulStreamableSequence<T, U> : IEnumerable<T>
+    public class StreamableSequence<T, U> : IEnumerable<T>
     {
         private readonly StatefulGetNextElementDelegate getNextElement;
         private readonly T firstElement;
@@ -17,6 +17,12 @@ namespace StreamableSequence
         /// A class that allows you to lazily generate elements of a sequence
         /// and be iterated on with access to additional state
         /// </summary>
+        /// <param name="firstElement">
+        /// The first element of the sequence
+        /// </param>
+        /// <param name="initialState">
+        /// Initial state during the enumeration of the sequence
+        /// </param>
         /// <param name="getNextElement">
         /// A function that is given:
         /// 1. The previous element of the sequence
@@ -27,20 +33,29 @@ namespace StreamableSequence
         /// 2. State to use in the next iteration
         /// 3. A bool to indicate the element is the last element
         /// </param>
-        /// <param name="firstElement">
-        /// The first element of the sequence
-        /// </param>
-        public StatefulStreamableSequence(
+        public static StreamableSequence<T, U> Create(
             T firstElement,
             U initialState,
             StatefulGetNextElementDelegate getNextElement)
         {
-            this.getNextElement = getNextElement 
+            getNextElement = getNextElement
                 ?? throw new ArgumentNullException(nameof(getNextElement));
-            this.firstElement = firstElement
+            firstElement = firstElement
                 ?? throw new ArgumentNullException(nameof(firstElement));
-            this.initialState = initialState
+            initialState = initialState
                 ?? throw new ArgumentNullException(nameof(initialState));
+
+            return new StreamableSequence<T, U>(firstElement, initialState, getNextElement);
+        }
+
+        private StreamableSequence(
+            T firstElement,
+            U initialState,
+            StatefulGetNextElementDelegate getNextElement)
+        {
+            this.getNextElement = getNextElement;
+            this.firstElement = firstElement;
+            this.initialState = initialState;
         }
 
         #region IEnumerable
