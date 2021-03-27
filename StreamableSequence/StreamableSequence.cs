@@ -15,6 +15,7 @@ namespace StreamableSequence
         /// <summary>
         /// A class that allows you to lazily generate elements of a sequence
         /// and be iterated on
+        /// `T` represents the type of the elements
         /// </summary>
         /// <param name="firstElement">
         /// The first element of the sequence
