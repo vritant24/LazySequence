@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazySequence", "LazySequence\LazySequence.csproj", "{550BDF21-4307-4CA0-8508-77AEB6DD9152}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazySequence.Test", "LazySequence.Test\LazySequence.Test.csproj", "{26CD06BF-0873-4D5C-9C2E-C7D0A67362B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{550BDF21-4307-4CA0-8508-77AEB6DD9152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{550BDF21-4307-4CA0-8508-77AEB6DD9152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{550BDF21-4307-4CA0-8508-77AEB6DD9152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{550BDF21-4307-4CA0-8508-77AEB6DD9152}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26CD06BF-0873-4D5C-9C2E-C7D0A67362B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26CD06BF-0873-4D5C-9C2E-C7D0A67362B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26CD06BF-0873-4D5C-9C2E-C7D0A67362B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26CD06BF-0873-4D5C-9C2E-C7D0A67362B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3CA42292-1C6E-428B-A5F4-1A3A1CAE88AC}
+	EndGlobalSection
+EndGlobal

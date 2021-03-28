@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StreamableSequence\StreamableSequence.csproj" />
+    <ProjectReference Include="..\StreamableSequence\LazySequence.csproj" />
   </ItemGroup>
 
 </Project>
