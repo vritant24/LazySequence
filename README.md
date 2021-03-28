@@ -1,1 +1,1 @@
-# StreamableSequence
+# LazySequence
