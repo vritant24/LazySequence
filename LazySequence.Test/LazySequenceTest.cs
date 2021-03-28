@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace StreamableSequence.Test
+namespace LazySequence.Test
 {
     [TestClass]
     public class LazySequenceTest

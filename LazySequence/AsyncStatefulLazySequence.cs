@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace StreamableSequence
+namespace LazySequence
 {
     public class AsyncLazySequence<T, U> : IAsyncEnumerable<T>
     {
@@ -65,8 +65,8 @@ namespace StreamableSequence
         public async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
             var isCompleted = false;
-            var currentElement = this.firstElement;
-            var currentState = this.initialState;
+            var currentElement = firstElement;
+            var currentState = initialState;
             ulong indexOfCurrentElement = 0;
 
             while (!isCompleted)

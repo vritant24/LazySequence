@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace StreamableSequence
+namespace LazySequence
 {
     public class LazySequence<T, U> : IEnumerable<T>
     {
@@ -64,8 +64,8 @@ namespace StreamableSequence
         public IEnumerator<T> GetEnumerator()
         {
             var isCompleted = false;
-            var currentElement = this.firstElement;
-            var currentState = this.initialState;
+            var currentElement = firstElement;
+            var currentState = initialState;
             ulong indexOfCurrentElement = 0;
 
             while (!isCompleted)
@@ -78,7 +78,7 @@ namespace StreamableSequence
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         #endregion
     }
 }
