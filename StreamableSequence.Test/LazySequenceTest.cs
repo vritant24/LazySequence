@@ -5,7 +5,7 @@ using System.Linq;
 namespace StreamableSequence.Test
 {
     [TestClass]
-    public class StreamableSequenceTest
+    public class LazySequenceTest
     {
         [TestMethod]
         [DataRow(0,false)]
@@ -17,12 +17,12 @@ namespace StreamableSequence.Test
         {
             if (getNextElement)
             {
-                _ = StreamableSequence<int?>.Create(
+                _ = LazySequence<int?>.Create(
                     firstElement, (i, k) => (0, false));
             }
             else
             {
-                _ = StreamableSequence<int?>.Create(
+                _ = LazySequence<int?>.Create(
                     firstElement, null);
             }
         }
@@ -30,7 +30,7 @@ namespace StreamableSequence.Test
         [TestMethod]
         public void ShouldReturnCorrectSequence()
         {
-            var x = StreamableSequence<int>.Create(
+            var x = LazySequence<int>.Create(
                     1, (i, k) => (i + 1, false));
 
             Assert.AreEqual(1, x.First());
@@ -41,7 +41,7 @@ namespace StreamableSequence.Test
         [TestMethod]
         public void ShouldUpdateIndex()
         {
-            var x = StreamableSequence<int>.Create(
+            var x = LazySequence<int>.Create(
                     0, (_, k) => ((int)k,false));
 
             Assert.AreEqual(1, x.Skip(1).First());
@@ -51,7 +51,7 @@ namespace StreamableSequence.Test
         [TestMethod]
         public void ShouldComplete()
         {
-            var x = StreamableSequence<int>.Create(
+            var x = LazySequence<int>.Create(
                     1, (i, _) => (i + 1, i == 10));
 
             Assert.AreEqual(10, x.Count());

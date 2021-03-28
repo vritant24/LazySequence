@@ -5,7 +5,7 @@ using System.Linq;
 namespace StreamableSequence.Test
 {
     [TestClass]
-    public class StatefulStreamableSequenceTest
+    public class StatefulLazySequenceTest
     {
         [TestMethod]
         [DataRow(0, 0, false)]
@@ -19,12 +19,12 @@ namespace StreamableSequence.Test
         {
             if (getNextElement)
             {
-                _ = StreamableSequence<int?, int?>.Create(
+                _ = LazySequence<int?, int?>.Create(
                     firstElement, initialState, (i, j, k) => (0, 0, false));
             }
             else
             {
-                _ = StreamableSequence<int?, int?>.Create(
+                _ = LazySequence<int?, int?>.Create(
                     firstElement, initialState, null);
             }
         }
@@ -32,7 +32,7 @@ namespace StreamableSequence.Test
         [TestMethod]
         public void ShouldReturnCorrectSequence()
         {
-            var x = StreamableSequence<int, int>.Create(
+            var x = LazySequence<int, int>.Create(
                     1, 0, (i, _, _) => (i + 1, 0, false));
 
             Assert.AreEqual(1, x.First());
@@ -43,7 +43,7 @@ namespace StreamableSequence.Test
         [TestMethod]
         public void ShouldUpdateState()
         {
-            var x = StreamableSequence<int, int>.Create(
+            var x = LazySequence<int, int>.Create(
                     1, 0, (i, j, _) => (i + j, 1, false));
 
             Assert.AreEqual(1, x.Skip(1).First());
@@ -53,7 +53,7 @@ namespace StreamableSequence.Test
         [TestMethod]
         public void ShouldUpdateIndex()
         {
-            var x = StreamableSequence<int, int>.Create(
+            var x = LazySequence<int, int>.Create(
                     0, 0, (_, _, k) => ((int)k, 0, false));
 
             Assert.AreEqual(1, x.Skip(1).First());
@@ -63,7 +63,7 @@ namespace StreamableSequence.Test
         [TestMethod]
         public void ShouldComplete()
         {
-            var x = StreamableSequence<int, int>.Create(
+            var x = LazySequence<int, int>.Create(
                     1, 1, (i, j, _) => (i + j, 1, i == 10));
 
             Assert.AreEqual(10, x.Count());

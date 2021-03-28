@@ -1,21 +1,22 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace StreamableSequence
 {
-    public class LazySequence<T, U> : IEnumerable<T>
+    public class AsyncLazySequence<T, U> : IAsyncEnumerable<T>
     {
-        private readonly StatefulGetNextElementDelegate getNextElement;
+        private readonly StatefulGetNextElementDelegateAsync getNextElementAsync;
         private readonly T firstElement;
         private readonly U initialState;
 
-        public delegate (T nextElement, U currentState, bool isLastElement) StatefulGetNextElementDelegate(
+        public delegate Task<(T nextElement, U currentState, bool isLastElement)> StatefulGetNextElementDelegateAsync(
             T previousElement, U state, ulong nextIndex);
 
         /// <summary>
-        /// A class that allows you to lazily generate elements of a sequence
-        /// that can be iterated on with access to additional state
+        /// A class that allows you to lazily and asynchronously generate elements
+        /// of a sequence that can be iterated on with access to additional state
         /// `T` represents the type of the elements
         /// `U` represents the type of the state
         /// </summary>
@@ -25,43 +26,43 @@ namespace StreamableSequence
         /// <param name="initialState">
         /// Initial state during the enumeration of the sequence
         /// </param>
-        /// <param name="getNextElement">
+        /// <param name="getNextElementAsync">
         /// A function that is given:
         /// 1. The previous element of the sequence
         /// 2. modifiable state
         /// 3. The index of the requested element
-        /// and returns a tuple of:
+        /// and returns a Task a that resolves to tuple of:
         /// 1. The next element in the sequence
         /// 2. State to use in the next iteration
         /// 3. A bool to indicate the element is the last element
         /// </param>
-        public static IEnumerable<T> Create(
+        public static IAsyncEnumerable<T> Create(
             T firstElement,
             U initialState,
-            StatefulGetNextElementDelegate getNextElement)
+            StatefulGetNextElementDelegateAsync getNextElementAsync)
         {
-            getNextElement = getNextElement
-                ?? throw new ArgumentNullException(nameof(getNextElement));
+            getNextElementAsync = getNextElementAsync
+                ?? throw new ArgumentNullException(nameof(getNextElementAsync));
             firstElement = firstElement
                 ?? throw new ArgumentNullException(nameof(firstElement));
             initialState = initialState
                 ?? throw new ArgumentNullException(nameof(initialState));
 
-            return new LazySequence<T, U>(firstElement, initialState, getNextElement);
+            return new AsyncLazySequence<T, U>(firstElement, initialState, getNextElementAsync);
         }
 
-        private LazySequence(
+        private AsyncLazySequence(
             T firstElement,
             U initialState,
-            StatefulGetNextElementDelegate getNextElement)
+            StatefulGetNextElementDelegateAsync getNextElementAsync)
         {
-            this.getNextElement = getNextElement;
+            this.getNextElementAsync = getNextElementAsync;
             this.firstElement = firstElement;
             this.initialState = initialState;
         }
 
-        #region IEnumerable
-        public IEnumerator<T> GetEnumerator()
+        #region IAsyncEnumerable
+        public async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
             var isCompleted = false;
             var currentElement = this.firstElement;
@@ -70,15 +71,15 @@ namespace StreamableSequence
 
             while (!isCompleted)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 yield return currentElement;
 
                 indexOfCurrentElement++;
-                (currentElement, currentState, isCompleted) =
-                    getNextElement(currentElement, currentState, indexOfCurrentElement);
+                (currentElement, currentState, isCompleted) = await
+                    getNextElementAsync(currentElement, currentState, indexOfCurrentElement);
             }
         }
-
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
         #endregion
     }
 }

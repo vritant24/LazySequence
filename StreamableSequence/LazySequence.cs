@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace StreamableSequence
 {
-    public class StreamableSequence<T> : IEnumerable<T>
+    public class LazySequence<T> : IEnumerable<T>
     {
         private readonly GetNextElementDelegate getNextElement;
         private readonly T firstElement;
@@ -14,7 +14,7 @@ namespace StreamableSequence
 
         /// <summary>
         /// A class that allows you to lazily generate elements of a sequence
-        /// and be iterated on
+        /// that can be iterated on
         /// `T` represents the type of the elements
         /// </summary>
         /// <param name="firstElement">
@@ -28,7 +28,7 @@ namespace StreamableSequence
         /// 1. The next element in the sequence
         /// 2. A bool to indicate the element is the last element
         /// </param>
-        public static StreamableSequence<T> Create(
+        public static IEnumerable<T> Create(
             T firstElement,
             GetNextElementDelegate getNextElement)
         {
@@ -37,10 +37,10 @@ namespace StreamableSequence
             firstElement = firstElement
                 ?? throw new ArgumentNullException(nameof(firstElement));
 
-            return new StreamableSequence<T>(firstElement, getNextElement);
+            return new LazySequence<T>(firstElement, getNextElement);
         }
 
-        private StreamableSequence(
+        private LazySequence(
             T firstElement,
             GetNextElementDelegate getNextElement)
         {
