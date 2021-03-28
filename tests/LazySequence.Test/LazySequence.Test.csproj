@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LazySequence\LazySequence.csproj" />
+    <ProjectReference Include="..\..\src\LazySequence\LazySequence.csproj" />
   </ItemGroup>
 
 </Project>

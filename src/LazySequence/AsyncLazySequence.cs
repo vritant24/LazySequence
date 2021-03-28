@@ -45,17 +45,15 @@ namespace LazySequence
             T firstElement,
             GetNextElementDelegateAsync getNextElementAsync)
         {
-            this.getNextElementAsync = getNextElementAsync
-                ?? throw new ArgumentNullException(nameof(getNextElementAsync));
-            this.firstElement = firstElement
-                ?? throw new ArgumentNullException(nameof(firstElement));
+            this.getNextElementAsync = getNextElementAsync;
+            this.firstElement = firstElement;
         }
 
         #region IAsyncEnumerable
         public async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
             var isCompleted = false;
-            var currentElement = firstElement;
+            T? currentElement = this.firstElement;
             ulong indexOfCurrentElement = 0;
 
             while (!isCompleted)
@@ -66,7 +64,7 @@ namespace LazySequence
 
                 indexOfCurrentElement++;
                 (currentElement, isCompleted) = await
-                    getNextElementAsync(currentElement, indexOfCurrentElement);
+                    this.getNextElementAsync(currentElement, indexOfCurrentElement);
             }
         }
         #endregion

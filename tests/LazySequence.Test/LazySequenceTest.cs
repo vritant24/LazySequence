@@ -1,6 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LazySequence.Test
 {
@@ -8,7 +9,7 @@ namespace LazySequence.Test
     public class LazySequenceTest
     {
         [TestMethod]
-        [DataRow(0,false)]
+        [DataRow(0, false)]
         [DataRow(null, true)]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ContructorShouldThrowForNullArgs(
@@ -23,14 +24,16 @@ namespace LazySequence.Test
             else
             {
                 _ = LazySequence<int?>.Create(
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                     firstElement, null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
             }
         }
 
         [TestMethod]
         public void ShouldReturnCorrectSequence()
         {
-            var x = LazySequence<int>.Create(
+            IEnumerable<int> x = LazySequence<int>.Create(
                     1, (i, k) => (i + 1, false));
 
             Assert.AreEqual(1, x.First());
@@ -41,8 +44,8 @@ namespace LazySequence.Test
         [TestMethod]
         public void ShouldUpdateIndex()
         {
-            var x = LazySequence<int>.Create(
-                    0, (_, k) => ((int)k,false));
+            IEnumerable<int> x = LazySequence<int>.Create(
+                    0, (_, k) => ((int)k, false));
 
             Assert.AreEqual(1, x.Skip(1).First());
             Assert.AreEqual(2, x.Skip(2).First());
@@ -51,7 +54,7 @@ namespace LazySequence.Test
         [TestMethod]
         public void ShouldComplete()
         {
-            var x = LazySequence<int>.Create(
+            IEnumerable<int> x = LazySequence<int>.Create(
                     1, (i, _) => (i + 1, i == 10));
 
             Assert.AreEqual(10, x.Count());

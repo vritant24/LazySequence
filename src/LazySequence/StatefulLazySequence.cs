@@ -64,8 +64,8 @@ namespace LazySequence
         public IEnumerator<T> GetEnumerator()
         {
             var isCompleted = false;
-            var currentElement = firstElement;
-            var currentState = initialState;
+            T? currentElement = this.firstElement;
+            U? currentState = this.initialState;
             ulong indexOfCurrentElement = 0;
 
             while (!isCompleted)
@@ -74,7 +74,7 @@ namespace LazySequence
 
                 indexOfCurrentElement++;
                 (currentElement, currentState, isCompleted) =
-                    getNextElement(currentElement, currentState, indexOfCurrentElement);
+                    this.getNextElement(currentElement, currentState, indexOfCurrentElement);
             }
         }
 

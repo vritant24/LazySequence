@@ -65,8 +65,8 @@ namespace LazySequence
         public async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
             var isCompleted = false;
-            var currentElement = firstElement;
-            var currentState = initialState;
+            T? currentElement = this.firstElement;
+            U? currentState = this.initialState;
             ulong indexOfCurrentElement = 0;
 
             while (!isCompleted)
@@ -77,7 +77,7 @@ namespace LazySequence
 
                 indexOfCurrentElement++;
                 (currentElement, currentState, isCompleted) = await
-                    getNextElementAsync(currentElement, currentState, indexOfCurrentElement);
+                    this.getNextElementAsync(currentElement, currentState, indexOfCurrentElement);
             }
         }
         #endregion
