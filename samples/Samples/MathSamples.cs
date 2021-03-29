@@ -14,7 +14,7 @@ namespace Samples
         /// Create a sequence of all positive integers.
         /// Store a subset of the sequence.
         /// </summary>
-        public static void CreateArithmeticProgression()
+        public static void ArithmeticProgression()
         {
             /*
              * An arithmetic progression is a series of numbers where each number is
@@ -40,7 +40,7 @@ namespace Samples
         /// Create a sequence of all powers of 2.
         /// Store a substet of the sequence.
         /// </summary>
-        public static void CreateGeometricProgression()
+        public static void GeometricProgression()
         {
             /*
              * A geometric progression is a series of numbers where each number is
@@ -63,10 +63,10 @@ namespace Samples
         }
 
         /// <summary>
-        /// Create a sequence of all powers of 2.
+        /// Create a fibbionacci sequence
         /// Store a substet of the sequence.
         /// </summary>
-        public static void CreateFibionacciSequence()
+        public static void FibionacciSequence()
         {
             /*
              * A fibionacci sequence is a series of numbers where each number
