@@ -34,6 +34,25 @@ namespace Samples
             // Store a subset as a list.
             // [1, 2, 3, ..., 50]
             var firstFiftyPositiveIntegers = allPositiveIntegers.Take(50).ToList();
+
+            // sum of first 100 positive integers
+            var sumOfFirstHundredIntegers = allPositiveIntegers
+                .Take(100)
+                .Aggregate((acc, el) => acc + el);
+
+            // sum of all even numbers in the first 100 positive integers
+            var sumOfEvenInFirstHundredIntegers = allPositiveIntegers
+                .Take(100)
+                .Where(i => i % 2 == 0)
+                .Aggregate((acc, el) => acc + el);
+
+            /*
+             *  Since an IEnumerable is used, even chaining LINQ methods like
+             *  Take, Where, and Aggregate only lead to a single iteration
+             *  of the elelements, keeping it as efficient as possible*
+             *  (* in these contrived cases though, a simple equation
+             *  could be used, but for now, forget it and be excited!)
+             */
         }
 
         /// <summary>

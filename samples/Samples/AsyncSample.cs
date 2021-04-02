@@ -38,7 +38,7 @@ namespace Samples
             IAsyncEnumerator<object?> paginatedServerRequests = paginatedServerRequestCreator.GetAsyncEnumerator();
             (var hasElement, var pagedResponse1) = await paginatedServerRequests.TryGetNextAsync();
 
-            //The other way is to use the fact that it can be iterated on in a foreach loop
+            // The other way is to use the fact that it can be iterated on in a foreach loop
             await foreach (var pagedResponse2 in paginatedServerRequestCreator)
             {
                 // use pagedResponse2 here
