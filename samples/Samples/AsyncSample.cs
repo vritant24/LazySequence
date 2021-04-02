@@ -21,7 +21,7 @@ namespace Samples
              */
 
             var pageSize = 10;
-            IAsyncEnumerable<object?> paginatedServerRequests = AsyncLazySequence<object?, int>.Create(
+            IAsyncEnumerable<object?> paginatedServerRequestCreator = AsyncLazySequence<object?, int>.Create(
                 firstElement: null,
                 initialState: 0,
                 async (prev, currentOffset, index) =>
@@ -33,9 +33,15 @@ namespace Samples
                         isLastElement: false);
                 });
 
-            await foreach (var page in paginatedServerRequests)
+            // One way is to use the AsyncEnumerator as state and occasionally get the next
+            // paged response
+            IAsyncEnumerator<object?> paginatedServerRequests = paginatedServerRequestCreator.GetAsyncEnumerator();
+            (var hasElement, var pagedResponse1) = await paginatedServerRequests.TryGetNextAsync();
+
+            //The other way is to use the fact that it can be iterated on in a foreach loop
+            await foreach (var pagedResponse2 in paginatedServerRequestCreator)
             {
-                // page available from server asynchronously
+                // use pagedResponse2 here
             }
         }
 
