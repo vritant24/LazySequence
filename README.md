@@ -1,9 +1,3 @@
 # LazySequence
 
-## Todo
-  1. Add samples
-  2. Add documentation around possible usage
-     1. Arithmetic Progression
-     2. Geometric Progression
-     3. Lazy Pagination
-     4. Object Generation
+[![.NET](https://github.com/vritant24/LazySequence/actions/workflows/dotnet.yml/badge.svg)](https://github.com/vritant24/LazySequence/actions/workflows/dotnet.yml)
