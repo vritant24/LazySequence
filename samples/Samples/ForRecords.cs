@@ -6,5 +6,5 @@ namespace System.Runtime.CompilerServices
     /// This is a hack to get Records to work
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public record IsExternalInit;
+    internal static class IsExternalInit { }
 }
