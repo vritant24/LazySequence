@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LazySequence
@@ -27,6 +26,7 @@ namespace LazySequence
         /// True if the enumeration has not ended,
         /// False if it has
         /// </returns>
+        /// <remarks>This extension method is not thread safe</remarks>
         public static bool TryGetNext<T>(
             this IEnumerator<T> enumerator,
             [MaybeNullWhen(false)] out T element)
@@ -56,6 +56,7 @@ namespace LazySequence
         /// <item>The next element of the enumeration if any</item>
         /// </list>
         /// </returns>
+        /// <remarks>This extension method is not thread safe</remarks>
         public static async Task<(bool hasElement, T? element)> TryGetNextAsync<T>(
             this IAsyncEnumerator<T> enumerator)
         {
