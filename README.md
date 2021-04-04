@@ -15,6 +15,11 @@ Inspired by lazy evaluation in functional languages, like Haskell, that allow "i
 
 ## How do you use it?
 
+1. Take a look at the [src\LazySequence](src\LazySequence) to see the documented public API.
+2. All examples can be found in [samples/Samples](samples/Samples).
+
+### A contrived example
+
 Taking an example from Math, consider an arithmetic progression:
 
 ```cs
@@ -53,15 +58,15 @@ var sumOfFirstHundredIntegers = allPositiveIntegers
     .Aggregate((acc, el) => acc + el);
 ```
 
-## Practical use
+### Practical use
 
 As cool as arithmetic and geometric progressions may be, they don't really appear that commonly in day-to-day work sadly :(
 
 But Lazy sequence can be used in more practical scenarios as well! With the ability to pass state along with the enumeration, it can be used as far as your imagination can take you!
-All examples can be found in [samples/Samples](samples/Samples).
+
 A couple to highlight:
 
-### Object generation
+#### Object generation
 
 [See samples\Samples/ObjectGeneration.cs](samples\Samples\ObjectGeneration.cs)
 
@@ -74,7 +79,7 @@ IEnumerable<string> uniqueNames = LazySequence<string>.Create(
     (prev, idx) => ($"name_{idx}", false));
 ```
 
-### Pagination
+#### Pagination
 
 [See samples\Samples\AsyncSample.cs](samples\Samples\AsyncSample.cs)
 
