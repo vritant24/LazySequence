@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using LazySequence;
 
 namespace Samples
@@ -12,8 +10,7 @@ namespace Samples
     public class ObjectGeneration
     {
         /// <summary>
-        /// An example to show creation of list of objects using
-        /// sequence
+        /// An example to show creation of list of objects.
         /// </summary>
         public static void GenerateListOfPersons()
         {
@@ -29,9 +26,31 @@ namespace Samples
                     isLastElement: false));
 
             // A list of Person objects with unique `Name` values
-            // created on demand by our Lazy Sequence
+            // created on demand by our Lazy Sequence.
             // [Person(name+1), Person(name_2)...Person(name_10)]
             var tenPeople = infinitePeople.Take(10).ToList();
+        }
+
+        /// <summary>
+        /// An example to show generation of unique names.
+        /// </summary>
+        public static void GenerateUniqueNames()
+        {
+            /*
+             * Consider a scenario where you need to generate unique names.
+             */
+            IEnumerable<string> uniqueNames = LazySequence<string>.Create(
+                string.Empty,
+                (prev, idx) => ($"name_{idx}", false));
+
+            // Skipping the first element since the first element is an emoty string.
+            IEnumerator<string>? uniqueNameProvider = uniqueNames.Skip(1).GetEnumerator();
+
+            if (uniqueNameProvider.TryGetNext(out var name))
+            {
+                // `name` here would be unique.
+                // example: "name_1"
+            }
         }
 
         private record Person(string Name);
