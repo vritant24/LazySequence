@@ -11,6 +11,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PropertyGroup>
+      <VersionPrefix>0.0.1</VersionPrefix>
+      <VersionSuffix>alpha</VersionSuffix>
+    </PropertyGroup>
+  </PropertyGroup>
+
   <ItemDefinitionGroup>
     <!-- We always want MSBuild properties generated that point at the restored location of each package. -->
     <PackageReference GeneratePathProperty="true" />
