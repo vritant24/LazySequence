@@ -12,10 +12,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PropertyGroup>
-      <VersionPrefix>0.0.1</VersionPrefix>
-      <VersionSuffix>alpha</VersionSuffix>
-    </PropertyGroup>
+    <VersionPrefix>0.0.1</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
