@@ -1,7 +1,4 @@
 name: publish to nuget
-on:
-  push:
-    branches: [main]
 
 jobs:
   publish:
