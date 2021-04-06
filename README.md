@@ -44,7 +44,7 @@ Why is it cool? Because `allPositiveIntegers` above is now a never-ending* enume
 foreach (var element in allPositiveIntegers)
 {
     // this loop will iterate through all integers
-    // in `ulong`
+    // possible in `int`
     Console.WriteLine(element);
 }
 ```
