@@ -43,8 +43,8 @@ Why is it cool? Because `allPositiveIntegers` above is now a never-ending* enume
 ```cs
 foreach (var element in allPositiveIntegers)
 {
-    // Don't really do this unless you want to see a stack overflow.
-    // It's a never-ending data structure after all.
+    // this loop will iterate through all integers
+    // in `ulong`
     Console.WriteLine(element);
 }
 ```
